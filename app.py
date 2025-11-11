@@ -15,7 +15,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        img_file = request.files["image"]
+        img_file = request.files.get("image")
         if img_file:
             img_path = os.path.join(UPLOAD_FOLDER, f"{uuid.uuid4().hex}.jpg")
             img_file.save(img_path)
@@ -78,4 +78,6 @@ def index():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # 取得 Render 提供的端口，如果沒有就用 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
