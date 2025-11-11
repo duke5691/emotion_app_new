@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>情緒辨識系統</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        form {
+            margin: 30px auto;
+        }
+        input[type="file"] {
+            padding: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border: 2px solid #ccc;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>情緒辨識系統</h1>
+
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <input type="submit" value="上傳並分析">
+    </form>
+
+    {% if result_img %}
+        <h2>分析結果：</h2>
+        <img src="{{ url_for('static', filename=result_img) }}" alt="分析後的圖片" style="max-width: 500px;">
+    {% endif %}
+
+    {% if error %}
+        <p class="error">發生錯誤：{{ error }}</p>
+    {% endif %}
+</body>
+</html>
